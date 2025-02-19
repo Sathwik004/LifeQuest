@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "799831966428",
+    "project_id": "lifequest-9a31a",
+    "storage_bucket": "lifequest-9a31a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799831966428:android:66663d297d169e00b8ea19",
+        "android_client_info": {
+          "package_name": "com.example.lifeques"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799831966428-7p7b2dhjm15pv80ks5uuf1q775gt5v32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoKVhUbB8TFi3QgPELojRRzhl-nz40NNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799831966428-7p7b2dhjm15pv80ks5uuf1q775gt5v32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799831966428:android:2a644468a5d7563db8ea19",
+        "android_client_info": {
+          "package_name": "com.example.lifequest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799831966428-7p7b2dhjm15pv80ks5uuf1q775gt5v32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoKVhUbB8TFi3QgPELojRRzhl-nz40NNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799831966428-7p7b2dhjm15pv80ks5uuf1q775gt5v32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
