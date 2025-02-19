@@ -4,6 +4,8 @@ LifeQuest is a gamified task manager and productivity app that helps users stay 
 
 ## 🚀 Features
 
+<!-- ## ScreenShots -->
+
 ### ✅ Completed Features:
 
 -   **Authentication**: Sign in with Google, persistent auth state management.
