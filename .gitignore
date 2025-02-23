@@ -44,7 +44,6 @@ app.*.map.json
 
 .env
 firebase.json
-water.json
 /lib/core/secrets/
 /lib/firebase_options.dart
 /build

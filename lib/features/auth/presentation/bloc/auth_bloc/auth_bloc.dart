@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthState> {
     on<AuthSignIn>((event, emit) async {
       emit(AuthLoadingState());
       final response = await _userSignIn(NoParams());
+      print(response);
 
       response.fold(
           (failure) => emit(AuthFailureState(message: failure.message)),
@@ -24,6 +25,10 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthState> {
 
     on<AuthChanges>((event, emit) async {
       //if user logs out emit AuthInitial state
+    });
+
+    on<AuthCheck>((event, emit) {
+      //Check if user is logged In
     });
 
     on<AuthSignOut>((event, emit) async {

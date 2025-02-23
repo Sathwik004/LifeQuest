@@ -23,7 +23,7 @@ class MainScreen extends StatelessWidget {
             } else if (state is AuthLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is AuthSuccessState) {
-              return const HomePage();
+              return HomePage(userId: state.userId);
             } else {
               return const DummyScreen(title: "Some error occurred");
             }

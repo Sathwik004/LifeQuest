@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifequest/core/theme/theme_cubit.dart';
 import 'package:lifequest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 import 'package:lifequest/features/home/presentation/cubits/bottom_nav.dart';
 import 'package:lifequest/firebase_options.dart';
 import 'package:lifequest/init_dependencies.dart';
@@ -37,6 +38,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeCubit>(
           create: (context) => serviceLocater<ThemeCubit>(),
         ),
+
+        BlocProvider<HabitsBloc>(
+          create: (context) => serviceLocater<HabitsBloc>(),
+        )
       ],
       child: const MainScreen(),
     );

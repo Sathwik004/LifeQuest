@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeCubit extends Cubit<ThemeData> {
-  ThemeCubit() : super(_lightTheme);
+  ThemeCubit() : super(_darkTheme);
 
   static final ThemeData _lightTheme = ThemeData(
     brightness: Brightness.light,
