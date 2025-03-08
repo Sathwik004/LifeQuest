@@ -5,6 +5,7 @@ import 'package:lifequest/core/exceptions/server_exception.dart';
 abstract interface class AuthRemoteDataSource {
   Future<String> signInWithGoogle();
   Future<void> signOut();
+  String checkAuthState();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -21,6 +22,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth =
           await googleUser!.authentication;
+
+      //print(googleAuth);
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -46,5 +49,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       throw ServerException(e.toString());
     }
+  }
+
+  @override
+  String checkAuthState() {
+    if (firebaseAuth.currentUser == null) {
+      throw ServerException("No User signed in");
+    }
+    return firebaseAuth.currentUser!.uid;
   }
 }

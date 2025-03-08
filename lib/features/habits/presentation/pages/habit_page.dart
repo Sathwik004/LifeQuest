@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
+import 'package:lifequest/features/habits/presentation/components/habit_card.dart';
 
 class HabitPage extends StatefulWidget {
   const HabitPage({super.key});
@@ -32,16 +33,7 @@ class _HabitPageState extends State<HabitPage> {
             itemCount: state.habits.length,
             itemBuilder: (context, index) {
               final habit = state.habits[index];
-              return ListTile(
-                title: Text(habit.title),
-                subtitle: Text("Streak: ${habit.streak}"),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    context.read<HabitsBloc>().add(RemoveHabitsEvent(habit.id));
-                  },
-                ),
-              );
+              return HabitCard(habit: habit);
             },
           );
         }

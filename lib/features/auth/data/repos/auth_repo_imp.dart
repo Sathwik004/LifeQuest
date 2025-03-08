@@ -32,4 +32,16 @@ class AuthRepoImp implements AuthRepo {
       return left(Failure(e.toString()));
     }
   }
+
+  @override
+  Either<Failure, String> checkAuthState() {
+    try {
+      final userId = authRemoteDataSource.checkAuthState();
+      return right(userId);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }

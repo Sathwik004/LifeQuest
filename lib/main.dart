@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         //Pass all the blocs here
-        BlocProvider<AuthBloc>(create: (context) => serviceLocater<AuthBloc>()),
+        BlocProvider<AuthBloc>(
+          create: (context) => serviceLocater<AuthBloc>()..add(AuthCheck()),
+        ),
 
         BlocProvider<BottomNavCubit>(
           create: (context) => serviceLocater<BottomNavCubit>(),

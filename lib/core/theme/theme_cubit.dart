@@ -12,6 +12,9 @@ class ThemeCubit extends Cubit<ThemeData> {
   static final ThemeData _darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.deepPurple,
+    listTileTheme: ListTileThemeData(
+      tileColor: Colors.grey[800],
+    ),
   );
 
   void toggleTheme() {

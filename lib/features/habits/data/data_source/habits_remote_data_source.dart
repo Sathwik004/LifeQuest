@@ -6,6 +6,7 @@ abstract class HabitRemoteDataSource {
   Future<void> removeHabit(String id);
   Future<void> updateHabit(HabitModel habit);
   Future<List<HabitModel>> getHabits();
+  Future<void> updateStreak(String id);
 }
 
 class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
@@ -13,6 +14,11 @@ class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
   final String userId;
 
   HabitRemoteDataSourceImpl({required this.firestore, required this.userId});
+
+  @override
+  Future<void> updateStreak(String id) async {
+    // Add the new completion date to the habit
+  }
 
   @override
   Future<void> addHabit(HabitModel habit) async {

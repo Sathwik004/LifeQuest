@@ -33,3 +33,9 @@ class RemoveHabitsEvent extends HabitsEvent {
   @override
   List<Object?> get props => [habitsId];
 }
+
+class IncrementHabitStreakEvent extends HabitsEvent {
+  final String habitId;
+
+  IncrementHabitStreakEvent(this.habitId);
+}

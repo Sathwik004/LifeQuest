@@ -6,6 +6,7 @@ import 'package:lifequest/core/theme/theme_cubit.dart';
 import 'package:lifequest/features/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:lifequest/features/auth/data/repos/auth_repo_imp.dart';
 import 'package:lifequest/features/auth/domain/repo/auth_repo.dart';
+import 'package:lifequest/features/auth/domain/usecases/user_auth_state.dart';
 import 'package:lifequest/features/auth/domain/usecases/user_sign_in.dart';
 import 'package:lifequest/features/auth/domain/usecases/user_sign_out.dart';
 import 'package:lifequest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
@@ -107,8 +108,17 @@ Future<void> _authdependencies() async {
     ),
   );
 
+  serviceLocater.registerFactory(
+    () => UserAuthState(
+      authRepo: serviceLocater(),
+    ),
+  );
+
   serviceLocater.registerLazySingleton<AuthBloc>(
-    () => AuthBloc(userSignIn: serviceLocater(), userSignOut: serviceLocater()),
+    () => AuthBloc(
+        userSignIn: serviceLocater(),
+        userSignOut: serviceLocater(),
+        userAuthState: serviceLocater()),
   );
 }
 
