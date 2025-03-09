@@ -5,12 +5,17 @@ abstract class HabitsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetHabitsEvent extends HabitsEvent {}
+class GetHabitsEvent extends HabitsEvent {
+  final String userId;
+
+  GetHabitsEvent({required this.userId});
+}
 
 class AddHabitsEvent extends HabitsEvent {
   final Habit habits;
+  final String userId;
 
-  AddHabitsEvent(this.habits);
+  AddHabitsEvent({required this.habits, required this.userId});
 
   @override
   List<Object?> get props => [habits];
@@ -18,24 +23,29 @@ class AddHabitsEvent extends HabitsEvent {
 
 class UpdateHabitsEvent extends HabitsEvent {
   final Habit habits;
+  final String userId;
 
-  UpdateHabitsEvent(this.habits);
+  UpdateHabitsEvent({required this.habits, required this.userId});
 
   @override
   List<Object?> get props => [habits];
 }
 
 class RemoveHabitsEvent extends HabitsEvent {
-  final String habitsId;
+  final String habitId;
+  final String userId;
 
-  RemoveHabitsEvent(this.habitsId);
+  RemoveHabitsEvent({required this.habitId, required this.userId});
 
   @override
-  List<Object?> get props => [habitsId];
+  List<Object?> get props => [habitId];
 }
 
 class IncrementHabitStreakEvent extends HabitsEvent {
   final String habitId;
+  final String userId;
 
-  IncrementHabitStreakEvent(this.habitId);
+  IncrementHabitStreakEvent(this.habitId, {required this.userId});
 }
+
+class HabitsResetEvent extends HabitsEvent {}

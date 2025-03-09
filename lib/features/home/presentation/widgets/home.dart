@@ -4,11 +4,14 @@ import 'package:lifequest/core/widgets/appbar.dart';
 import 'package:lifequest/core/widgets/bottom_nav_bar.dart';
 import 'package:lifequest/features/habits/presentation/pages/habit_page.dart';
 import 'package:lifequest/features/home/presentation/cubits/bottom_nav.dart';
+import 'package:lifequest/features/user_profile/domain/entities/user.dart';
+import 'package:lifequest/features/user_profile/presentation/pages/user_profile.dart';
 
 class HomePage extends StatefulWidget {
-  final userId;
+  final String userId;
+  final UserEntity user;
 
-  const HomePage({super.key, required this.userId});
+  const HomePage({super.key, required this.userId, required this.user});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,9 +21,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      HabitPage(),
+      const HabitPage(),
       const Center(child: Text('Guilds Page')),
-      const Center(child: Text('Stats Page')),
+      UserPage(user: widget.user),
     ];
     return Scaffold(
         appBar: MyAppBar(context: context),
@@ -29,6 +32,6 @@ class _HomePageState extends State<HomePage> {
             return pages[selectedIndex]; // Show selected page
           },
         ),
-        bottomNavigationBar: MyBottomNavBar());
+        bottomNavigationBar: const MyBottomNavBar());
   }
 }

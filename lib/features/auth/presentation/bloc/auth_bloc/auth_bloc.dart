@@ -11,11 +11,12 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthState> {
   final UserSignIn _userSignIn;
   final UserSignOut _userSignOut;
   final UserAuthState _userAuthState;
-  AuthBloc(
-      {required UserSignIn userSignIn,
-      required UserSignOut userSignOut,
-      required UserAuthState userAuthState})
-      : _userSignIn = userSignIn,
+
+  AuthBloc({
+    required UserSignIn userSignIn,
+    required UserSignOut userSignOut,
+    required UserAuthState userAuthState,
+  })  : _userSignIn = userSignIn,
         _userSignOut = userSignOut,
         _userAuthState = userAuthState,
         super(AuthInitial()) {
@@ -45,7 +46,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthState> {
 
       response.fold(
           (failure) => emit(AuthFailureState(message: failure.message)),
-          (val) => emit(AuthInitial()));
+          (val) => emit(AuthLoggedOutState()));
     });
   }
 }

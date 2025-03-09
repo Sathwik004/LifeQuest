@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lifequest/core/usecase/usecase.dart';
@@ -25,17 +26,23 @@ class HabitsBloc extends Bloc<HabitsEvent, HabitsState> {
     on<GetHabitsEvent>((event, emit) async {
       print("Getting habits\n\n");
       emit(HabitsLoading());
-      final result = await getHabitsUseCase(NoParams());
+      final result =
+          await getHabitsUseCase(GetHabitParams(userId: event.userId));
 
       result.fold(
         (failure) => emit(HabitsErrorState(failure.message)),
-        (habits) => emit(HabitsLoaded(habits)),
+        (habits) => emit(HabitsLoaded(habits, userId: event.userId)),
       );
     });
 
     on<HabitsEvent>((event, emit) {
       print("Inside habits event");
       print(event);
+    });
+
+    on<HabitsResetEvent>((event, emit) {
+      print("Resetting habits\n\n");
+      emit(HabitsInitial());
     });
   }
 }

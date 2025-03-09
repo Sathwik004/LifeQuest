@@ -12,12 +12,13 @@ class RemoveHabitUseCase implements UseCase<void, HabitIdParams> {
 
   @override
   Future<Either<Failure, void>> call(HabitIdParams params) {
-    return repository.removeHabit(params.habitId);
+    return repository.removeHabit(params.habitId, params.userId);
   }
 }
 
 class HabitIdParams {
   final String habitId;
+  final String userId;
 
-  HabitIdParams(this.habitId);
+  HabitIdParams(this.habitId, {required this.userId});
 }

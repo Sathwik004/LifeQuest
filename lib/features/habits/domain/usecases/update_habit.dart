@@ -13,12 +13,13 @@ class UpdateHabitUseCase implements UseCase<void, HabitParams> {
 
   @override
   Future<Either<Failure, void>> call(HabitParams params) {
-    return repository.updateHabit(params.habit);
+    return repository.updateHabit(params.habit, params.userId);
   }
 }
 
 class HabitParams {
   final Habit habit;
+  final String userId;
 
-  HabitParams(this.habit);
+  HabitParams(this.habit, {required this.userId});
 }

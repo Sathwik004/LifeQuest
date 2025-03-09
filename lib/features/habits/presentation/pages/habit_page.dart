@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lifequest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 import 'package:lifequest/features/habits/presentation/components/habit_card.dart';
 
@@ -14,10 +15,6 @@ class _HabitPageState extends State<HabitPage> {
   @override
   void initState() {
     super.initState();
-    if (context.read<HabitsBloc>().state is HabitsInitial) {
-      print("📢 Dispatching GetHabitsEvent...");
-      context.read<HabitsBloc>().add(GetHabitsEvent());
-    }
   }
 
   @override

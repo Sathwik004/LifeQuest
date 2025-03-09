@@ -11,8 +11,9 @@ class HabitsLoading extends HabitsState {}
 
 class HabitsLoaded extends HabitsState {
   final List<Habit> habits;
+  final String userId;
 
-  HabitsLoaded(this.habits);
+  HabitsLoaded(this.habits, {required this.userId});
 
   @override
   List<Object?> get props => [habits];

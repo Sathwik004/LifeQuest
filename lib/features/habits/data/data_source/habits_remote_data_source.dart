@@ -2,26 +2,25 @@ import 'package:lifequest/features/habits/data/models/habit_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class HabitRemoteDataSource {
-  Future<void> addHabit(HabitModel habit);
-  Future<void> removeHabit(String id);
-  Future<void> updateHabit(HabitModel habit);
-  Future<List<HabitModel>> getHabits();
-  Future<void> updateStreak(String id);
+  Future<void> addHabit(HabitModel habit, String userId);
+  Future<void> removeHabit(String id, String userId);
+  Future<void> updateHabit(HabitModel habit, String userId);
+  Future<List<HabitModel>> getHabits(String userId);
+  Future<void> updateStreak(String id, String userId);
 }
 
 class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
   final FirebaseFirestore firestore;
-  final String userId;
 
-  HabitRemoteDataSourceImpl({required this.firestore, required this.userId});
+  HabitRemoteDataSourceImpl({required this.firestore});
 
   @override
-  Future<void> updateStreak(String id) async {
+  Future<void> updateStreak(String habitId, String userId) async {
     // Add the new completion date to the habit
   }
 
   @override
-  Future<void> addHabit(HabitModel habit) async {
+  Future<void> addHabit(HabitModel habit, String userId) async {
     await firestore
         .collection('users')
         .doc(userId)
@@ -31,7 +30,7 @@ class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
   }
 
   @override
-  Future<void> removeHabit(String id) async {
+  Future<void> removeHabit(String id, String userId) async {
     await firestore
         .collection('users')
         .doc(userId)
@@ -41,7 +40,7 @@ class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
   }
 
   @override
-  Future<void> updateHabit(HabitModel habit) async {
+  Future<void> updateHabit(HabitModel habit, String userId) async {
     await firestore
         .collection('users')
         .doc(userId)
@@ -51,8 +50,8 @@ class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
   }
 
   @override
-  Future<List<HabitModel>> getHabits() async {
-    print("USER ID ${userId}");
+  Future<List<HabitModel>> getHabits(String userId) async {
+    print("USER ID $userId");
     final querySnapshot = await firestore
         .collection('users')
         .doc(userId)

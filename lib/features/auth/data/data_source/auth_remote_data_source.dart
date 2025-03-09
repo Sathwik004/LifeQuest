@@ -33,8 +33,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       final UserCredential userCredentials =
           await firebaseAuth.signInWithCredential(credential);
-
-      return userCredentials.user!.uid;
+      final userId = userCredentials.user!.uid;
+      print(userId);
+      return userId;
     } catch (e) {
       throw ServerException(e.toString());
     }

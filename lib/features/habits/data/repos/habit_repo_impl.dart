@@ -12,7 +12,7 @@ class HabitRepositoryImpl implements HabitRepository {
   HabitRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, void>> addHabit(Habit habit) async {
+  Future<Either<Failure, void>> addHabit(Habit habit, String userId) async {
     try {
       final habitModel = HabitModel(
         id: habit.id,
@@ -22,7 +22,7 @@ class HabitRepositoryImpl implements HabitRepository {
         lastCompleted: habit.lastCompleted,
         isActive: habit.isActive,
       );
-      await remoteDataSource.addHabit(habitModel);
+      await remoteDataSource.addHabit(habitModel, userId);
       return right(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));
@@ -32,9 +32,10 @@ class HabitRepositoryImpl implements HabitRepository {
   }
 
   @override
-  Future<Either<Failure, void>> removeHabit(String habitId) async {
+  Future<Either<Failure, void>> removeHabit(
+      String habitId, String userId) async {
     try {
-      await remoteDataSource.removeHabit(habitId);
+      await remoteDataSource.removeHabit(habitId, userId);
       return right(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));
@@ -44,7 +45,7 @@ class HabitRepositoryImpl implements HabitRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateHabit(Habit habit) async {
+  Future<Either<Failure, void>> updateHabit(Habit habit, String userId) async {
     try {
       final habitModel = HabitModel(
         id: habit.id,
@@ -54,7 +55,7 @@ class HabitRepositoryImpl implements HabitRepository {
         lastCompleted: habit.lastCompleted,
         isActive: habit.isActive,
       );
-      await remoteDataSource.updateHabit(habitModel);
+      await remoteDataSource.updateHabit(habitModel, userId);
       return right(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));
@@ -64,9 +65,9 @@ class HabitRepositoryImpl implements HabitRepository {
   }
 
   @override
-  Future<Either<Failure, List<Habit>>> getHabits() async {
+  Future<Either<Failure, List<Habit>>> getHabits(String userId) async {
     try {
-      final habitModels = await remoteDataSource.getHabits();
+      final habitModels = await remoteDataSource.getHabits(userId);
       final habits = habitModels
           .map((habitModel) => Habit(
                 id: habitModel.id,
