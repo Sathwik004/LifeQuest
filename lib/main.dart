@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifequest/core/theme/theme_cubit.dart';
 import 'package:lifequest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
 import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 import 'package:lifequest/features/home/presentation/cubits/bottom_nav.dart';
 import 'package:lifequest/features/user_profile/presentation/bloc/cubit/user_cubit.dart';
@@ -48,6 +49,10 @@ class MyApp extends StatelessWidget {
 
         BlocProvider<HabitsBloc>(
           create: (context) => serviceLocater<HabitsBloc>(),
+        ),
+
+        BlocProvider<GroupBloc>(
+          create: (context) => serviceLocater<GroupBloc>(),
         )
       ],
       child: const MainScreen(),

@@ -18,6 +18,28 @@ class UserCubit extends Cubit<UserState> {
     required this.userExistsUseCase,
   }) : super(UserInitial());
 
+  //TODO: Add experience to firstore on completion of a task
+  Future<void> addExperience({int experience = 10}) async {
+    print("Adding experience........");
+    final currentState = state;
+    if (currentState is UserLoaded) {
+      final updatedUser = currentState.user.copyWith(
+        experience: currentState.user.experience + experience,
+      );
+      emit(UserLoading());
+      print("Updated user: ${updatedUser.experience}");
+
+      // final result = await saveUserUseCase(SaveUserParams(user: updatedUser));
+
+      // result.fold(
+      //   (failure) => emit(UserError(failure.message)),
+      //   (_) => emit(UserLoaded(updatedUser)),
+      // );
+      emit(UserLoaded(updatedUser));
+      print("Experience added");
+    }
+  }
+
   Future<void> checkUser(String userId) async {
     emit(UserLoading());
 

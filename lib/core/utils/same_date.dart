@@ -1,4 +1,7 @@
-bool isSameDate(DateTime storedDate) {
+bool isSameDate(DateTime? storedDate) {
+  if (storedDate == null) {
+    return false;
+  }
   DateTime today = DateTime.now();
   try {
     if (storedDate.year == today.year &&

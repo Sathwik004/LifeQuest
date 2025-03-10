@@ -22,13 +22,13 @@ class AddHabitsEvent extends HabitsEvent {
 }
 
 class UpdateHabitsEvent extends HabitsEvent {
-  final Habit habits;
+  final Habit habit;
   final String userId;
 
-  UpdateHabitsEvent({required this.habits, required this.userId});
+  UpdateHabitsEvent({required this.habit, required this.userId});
 
   @override
-  List<Object?> get props => [habits];
+  List<Object?> get props => [habit];
 }
 
 class RemoveHabitsEvent extends HabitsEvent {

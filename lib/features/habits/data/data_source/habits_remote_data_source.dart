@@ -57,7 +57,6 @@ class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
         .doc(userId)
         .collection('habits')
         .get();
-    print(querySnapshot.docs.toString());
     return querySnapshot.docs
         .map((doc) => HabitModel.fromMap(doc.id, doc.data()))
         .toList();

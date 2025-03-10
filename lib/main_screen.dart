@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifequest/core/theme/theme_cubit.dart';
 import 'package:lifequest/core/widgets/dummy_screen.dart';
 import 'package:lifequest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
 import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 import 'package:lifequest/features/home/presentation/widgets/home.dart';
 import 'package:lifequest/features/auth/presentation/pages/signup_screen.dart';
@@ -42,6 +43,9 @@ class MainScreen extends StatelessWidget {
                 context
                     .read<HabitsBloc>()
                     .add(GetHabitsEvent(userId: state.userId));
+                context
+                    .read<GroupBloc>()
+                    .add(FetchUserGroups(userId: state.userId));
               }
             },
           ),
@@ -61,7 +65,7 @@ class MainScreen extends StatelessWidget {
         } else if (state is UserNotRegistered) {
           return UsernameInputPage(userId: userId);
         } else if (state is UserLoaded) {
-          return HomePage(userId: userId, user: state.user);
+          return HomePage(userId: userId);
         } else if (state is UserError) {
           return DummyScreen(title: state.message);
         } else {

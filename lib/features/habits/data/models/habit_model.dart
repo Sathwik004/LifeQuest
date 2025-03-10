@@ -31,7 +31,7 @@ class HabitModel extends Habit {
       'title': title,
       'description': description,
       'streak': streak,
-      'lastCompleted': Timestamp.fromDate(lastCompleted),
+      'lastCompleted': lastCompleted,
       'isActive': isActive,
     };
   }

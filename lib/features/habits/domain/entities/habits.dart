@@ -17,6 +17,24 @@ class Habit extends Equatable {
     required this.isActive,
   });
 
+  Habit copyWith({
+    String? id,
+    String? title,
+    String? description,
+    int? streak,
+    DateTime? lastCompleted,
+    bool? isActive,
+  }) {
+    return Habit(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      streak: streak ?? this.streak,
+      lastCompleted: lastCompleted ?? this.lastCompleted,
+      isActive: isActive ?? this.isActive,
+    );
+  }
+
   @override
   List<Object?> get props =>
       [id, title, description, streak, lastCompleted, isActive];

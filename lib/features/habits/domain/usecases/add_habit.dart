@@ -4,7 +4,7 @@ import 'package:lifequest/core/usecase/usecase.dart';
 import 'package:lifequest/features/habits/domain/entities/habits.dart';
 import 'package:lifequest/features/habits/domain/repos/habit_repo.dart';
 
-class AddHabitUseCase implements UseCase<void, HabitParams> {
+class AddHabitUseCase implements UseCase<void, AddHabitParams> {
   final HabitRepository repository;
 
   AddHabitUseCase({
@@ -12,14 +12,14 @@ class AddHabitUseCase implements UseCase<void, HabitParams> {
   });
 
   @override
-  Future<Either<Failure, void>> call(HabitParams params) {
+  Future<Either<Failure, void>> call(AddHabitParams params) {
     return repository.addHabit(params.habit, params.userId);
   }
 }
 
-class HabitParams {
+class AddHabitParams {
   final Habit habit;
   final String userId;
 
-  HabitParams({required this.habit, required this.userId});
+  AddHabitParams({required this.habit, required this.userId});
 }

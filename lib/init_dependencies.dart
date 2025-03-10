@@ -7,6 +7,7 @@ import 'package:lifequest/features/auth/data/data_source/auth_remote_data_source
 import 'package:lifequest/features/auth/data/repo/auth_repo_imp.dart';
 import 'package:lifequest/features/auth/domain/repo/auth_repo.dart';
 import 'package:lifequest/features/auth/domain/usecases/user_auth_state.dart';
+import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
 import 'package:lifequest/features/user_profile/data/data_source/user_remote_data_source.dart';
 import 'package:lifequest/features/user_profile/data/repo/user_repo_impl.dart';
 import 'package:lifequest/features/user_profile/domain/repo/user_repo.dart';
@@ -35,6 +36,7 @@ Future<void> initDependencies() async {
   await _homeDependencies();
   await _habitDependencies();
   await _userProfileDependencies();
+  await _guildDependencies();
 }
 
 Future<void> _userProfileDependencies() async {
@@ -173,4 +175,8 @@ Future<void> _homeDependencies() async {
   // Add your home dependencies here
   serviceLocater.registerLazySingleton<BottomNavCubit>(() => BottomNavCubit());
   serviceLocater.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
+}
+
+Future<void> _guildDependencies() async {
+  serviceLocater.registerLazySingleton<GroupBloc>(() => GroupBloc());
 }

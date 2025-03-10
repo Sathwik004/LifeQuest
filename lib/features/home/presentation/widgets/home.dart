@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifequest/core/widgets/appbar.dart';
 import 'package:lifequest/core/widgets/bottom_nav_bar.dart';
+import 'package:lifequest/features/groups/presentation/pages/group_page.dart';
+import 'package:lifequest/features/habits/presentation/components/add_habit.dart';
 import 'package:lifequest/features/habits/presentation/pages/habit_page.dart';
 import 'package:lifequest/features/home/presentation/cubits/bottom_nav.dart';
-import 'package:lifequest/features/user_profile/domain/entities/user.dart';
 import 'package:lifequest/features/user_profile/presentation/pages/user_profile.dart';
 
 class HomePage extends StatefulWidget {
   final String userId;
-  final UserEntity user;
 
-  const HomePage({super.key, required this.userId, required this.user});
+  const HomePage({super.key, required this.userId});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,16 +22,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       const HabitPage(),
-      const Center(child: Text('Guilds Page')),
-      UserPage(user: widget.user),
+      GuildScreen(),
+      UserPage(),
     ];
-    return Scaffold(
-        appBar: MyAppBar(context: context),
-        body: BlocBuilder<BottomNavCubit, int>(
-          builder: (context, selectedIndex) {
-            return pages[selectedIndex]; // Show selected page
-          },
-        ),
-        bottomNavigationBar: const MyBottomNavBar());
+    return BlocBuilder<BottomNavCubit, int>(
+      builder: (context, selectedIndex) {
+        return Scaffold(
+            appBar: MyAppBar(context: context),
+            body: pages[selectedIndex],
+            floatingActionButton: selectedIndex == 0
+                ? FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (_) => const AddHabitForm(),
+                      );
+                      print('Add habit');
+                    },
+                    child: const Icon(Icons.add),
+                  )
+                : null,
+            bottomNavigationBar: const MyBottomNavBar());
+      },
+    );
   }
 }

@@ -12,4 +12,20 @@ class UserEntity {
     this.health = 100,
     this.experience = 0,
   });
+
+  UserEntity copyWith({
+    String? uid,
+    String? username,
+    int? level,
+    int? health,
+    int? experience,
+  }) {
+    return UserEntity(
+      uid: uid ?? this.uid,
+      username: username ?? this.username,
+      level: level ?? this.level,
+      health: health ?? this.health,
+      experience: experience ?? this.experience,
+    );
+  }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lifequest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 import 'package:lifequest/features/habits/presentation/components/habit_card.dart';
 
@@ -26,12 +25,15 @@ class _HabitPageState extends State<HabitPage> {
         } else if (state is HabitsErrorState) {
           return Center(child: Text("Error State${state.message}"));
         } else if (state is HabitsLoaded) {
-          return ListView.builder(
-            itemCount: state.habits.length,
-            itemBuilder: (context, index) {
-              final habit = state.habits[index];
-              return HabitCard(habit: habit);
-            },
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ListView.builder(
+              itemCount: state.habits.length,
+              itemBuilder: (context, index) {
+                final habit = state.habits[index];
+                return HabitCard(habit: habit);
+              },
+            ),
           );
         }
         print(state);
