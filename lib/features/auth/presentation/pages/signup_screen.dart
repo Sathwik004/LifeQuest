@@ -18,7 +18,7 @@ class SignInPage extends StatelessWidget {
               style: TextStyle(fontSize: 32),
             ),
             const SizedBox(
-              height: 20,
+              height: 60,
             ),
             SignInButton(
               buttonType: ButtonType.google,

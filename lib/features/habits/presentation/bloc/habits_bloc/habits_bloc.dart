@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lifequest/features/habits/domain/entities/habits.dart';
@@ -81,6 +80,27 @@ class HabitsBloc extends Bloc<HabitsEvent, HabitsState> {
       );
     });
 
+    on<RemoveHabitsEvent>((event, emit) async {
+      print("Removing habit Event caught\n\n");
+      final result = await removeHabitUseCase(
+        RemoveHabitParams(habitId: event.habitId, userId: event.userId),
+      );
+
+      result.fold(
+        (failure) => emit(HabitsErrorState(failure.message)),
+        (success) {
+          final currentState = state;
+          if (currentState is HabitsLoaded) {
+            final updatedHabits = currentState.habits
+                .where((habit) => habit.id != event.habitId)
+                .toList();
+            emit(HabitsLoaded(updatedHabits, userId: event.userId));
+          } else {
+            emit(HabitsErrorState("Failed to remove habit"));
+          }
+        },
+      );
+    });
     on<HabitsResetEvent>((event, emit) {
       print("Resetting habits\n\n");
       emit(HabitsInitial());

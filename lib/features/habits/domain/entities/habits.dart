@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:lifequest/features/habits/domain/enums/habit_difficulty.dart';
+import 'package:lifequest/features/habits/domain/enums/habit_frequency.dart';
 
 class Habit extends Equatable {
   final String id;
@@ -7,6 +9,8 @@ class Habit extends Equatable {
   final int streak;
   final DateTime lastCompleted;
   final bool isActive;
+  final HabitFrequency frequency;
+  final HabitDifficulty difficulty;
 
   const Habit({
     required this.id,
@@ -15,6 +19,8 @@ class Habit extends Equatable {
     required this.streak,
     required this.lastCompleted,
     required this.isActive,
+    this.frequency = HabitFrequency.daily,
+    this.difficulty = HabitDifficulty.easy,
   });
 
   Habit copyWith({

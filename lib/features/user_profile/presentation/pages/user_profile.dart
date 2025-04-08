@@ -19,73 +19,75 @@ class UserPage extends StatelessWidget {
           int maxExperience = user.level * 5 + 100;
           int displayedExperience =
               user.experience > maxExperience ? maxExperience : user.experience;
-          return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Greeting with level badge
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const CircleAvatar(
-                      radius: 40,
-                      child: Icon(
-                        Icons.person,
-                        size: 40,
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Greeting with level badge
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const CircleAvatar(
+                        radius: 40,
+                        child: Icon(
+                          Icons.person,
+                          size: 40,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Greetings, ${user.username}!",
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                      const SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Greetings, ${user.username}!",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          "Lvl ${user.level}",
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                          const SizedBox(height: 20),
+                          Text(
+                            "Lvl ${user.level}",
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
 
-                const SizedBox(height: 30),
+                  const SizedBox(height: 30),
 
-                // Health Bar
-                const Text(
-                  "Health:",
-                  style: TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 5),
-                Text("${user.health} / 100"),
-                _buildProgressBar(
-                    user.health, 100, const Color.fromARGB(255, 226, 66, 55)),
+                  // Health Bar
+                  const Text(
+                    "Health:",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(height: 5),
+                  Text("${user.health} / 100"),
+                  _buildProgressBar(
+                      user.health, 100, const Color.fromARGB(255, 226, 66, 55)),
 
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Experience Bar
-                const Text(
-                  "Experience:",
-                  style: TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  "$displayedExperience / $maxExperience",
-                ),
-                _buildProgressBar(displayedExperience, maxExperience,
-                    const Color.fromARGB(255, 83, 177, 255)),
+                  // Experience Bar
+                  const Text(
+                    "Experience:",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "$displayedExperience / $maxExperience",
+                  ),
+                  _buildProgressBar(displayedExperience, maxExperience,
+                      const Color.fromARGB(255, 83, 177, 255)),
 
-                const SizedBox(height: 10),
-              ],
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           );
         } else {

@@ -12,9 +12,8 @@ class ThemeCubit extends Cubit<ThemeData> {
   static final ThemeData _darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.deepPurple,
-    listTileTheme: ListTileThemeData(
-      tileColor: Colors.grey[800],
-    ),
+    listTileTheme:
+        const ListTileThemeData(tileColor: Color.fromARGB(255, 40, 33, 51)),
   );
 
   void toggleTheme() {

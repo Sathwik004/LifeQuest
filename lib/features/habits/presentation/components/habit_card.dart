@@ -14,69 +14,87 @@ class HabitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: ListTile(
-        title: Text(
-          habit.title,
-          style: const TextStyle(
-            fontSize: 20,
+      child: Container(
+        // decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(10.0),
+        //     border: const Border(
+        //       bottom: BorderSide(color: Colors.grey, width: 4),
+        //       top: BorderSide(color: Colors.grey, width: 1),
+        //       left: BorderSide(color: Colors.grey, width: 1),
+        //       right: BorderSide(color: Colors.grey, width: 4),
+        //     )),
+        child: ListTile(
+          title: Text(
+            habit.title,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
           ),
-        ),
-        leading: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.local_fire_department,
-              size: 25,
-              color: Colors.orange,
-            ),
-            Text(
-              habit.streak.toString(),
-            ),
-          ],
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        subtitle: Text(
-          habit.description,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        onLongPress: () {
-          //TODO: Add edit habit functionality
-          //TODO: Add delete habit functionality
-        },
-        trailing: Wrap(
-          direction: Axis.vertical,
-          alignment: WrapAlignment.end,
-          spacing: 2,
-          children: [
-            IconButton(
-                onPressed: isSameDate(habit.lastCompleted)
-                    ? null
-                    : () {
-                        final state = context.read<AuthBloc>().state;
-                        if (state is AuthSuccessState) {
-                          context.read<HabitsBloc>().add(UpdateHabitsEvent(
-                              habit: habit.copyWith(
-                                  streak: habit.streak + 1,
-                                  lastCompleted: DateTime.now()),
-                              userId: state.userId));
+          leading: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Image(
+                image: AssetImage("assets/images/purple-flame2.png"),
+                height: 40,
+                width: 40,
+              ),
+              Text(
+                habit.streak.toString(),
+              ),
+            ],
+          ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          subtitle: Text(
+            habit.description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          onTap: () {
+            //TODO: Add edit habit functionality
+            //TODO: Add delete habit functionality
+            // print("Tyring to delete habit with id: ${habit.id}");
+            // final state = context.read<AuthBloc>().state;
 
-                          context
-                              .read<UserCubit>()
-                              .addExperience(experience: 10);
+            // if (state is AuthSuccessState) {
+            //   context.read<HabitsBloc>().add(
+            //       RemoveHabitsEvent(habitId: habit.id, userId: state.userId));
+            // }
+          },
+          trailing: Wrap(
+            direction: Axis.vertical,
+            alignment: WrapAlignment.end,
+            spacing: 2,
+            children: [
+              Checkbox(
+                value: isSameDate(habit.lastCompleted),
+                onChanged: isSameDate(habit.lastCompleted)
+                    ? null
+                    : (value) {
+                        if (value == true) {
+                          final state = context.read<AuthBloc>().state;
+                          if (state is AuthSuccessState) {
+                            context.read<HabitsBloc>().add(UpdateHabitsEvent(
+                                habit: habit.copyWith(
+                                    streak: habit.streak + 1,
+                                    lastCompleted: DateTime.now()),
+                                userId: state.userId));
+
+                            context
+                                .read<UserCubit>()
+                                .addExperience(experience: 10);
+                          }
                         }
                       },
-                icon: const Icon(
-                  Icons.add,
-                )),
-            //   IconButton(
-            //       onPressed: () {},
-            //       icon: const Icon(
-            //         Icons.remove,
-            //       )),
-          ],
+              ),
+              //   IconButton(
+              //       onPressed: () {},
+              //       icon: const Icon(
+              //         Icons.remove,
+              //       )),
+            ],
+          ),
         ),
       ),
     );

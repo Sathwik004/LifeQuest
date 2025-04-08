@@ -35,6 +35,10 @@ class HabitRepositoryImpl implements HabitRepository {
   Future<Either<Failure, void>> removeHabit(
       String habitId, String userId) async {
     try {
+      print("Removing habit with id: $habitId and userId: $userId");
+      if (userId.isEmpty) {
+        return left(Failure("User ID is null"));
+      }
       await remoteDataSource.removeHabit(habitId, userId);
       return right(null);
     } on ServerException catch (e) {

@@ -1,6 +1,8 @@
 part of 'auth_bloc.dart';
 
-abstract class AuthState {}
+abstract class AuthState {
+  get userId => null;
+}
 
 final class AuthInitial extends AuthState {}
 
