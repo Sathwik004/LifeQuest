@@ -16,14 +16,18 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     return BlocBuilder<BottomNavCubit, int>(
       builder: (context, selectedIndex) {
         return SalomonBottomBar(
+            backgroundColor: Theme.of(context).colorScheme.surface,
             currentIndex: selectedIndex,
             onTap: (index) =>
                 {context.read<BottomNavCubit>().updateIndex(index)},
             selectedItemColor: Colors.deepPurple,
-            margin: const EdgeInsets.symmetric(horizontal: 25),
+            margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             items: [
               SalomonBottomBarItem(
-                icon: const Icon(Icons.list),
+                icon: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Icon(Icons.list),
+                ),
                 title: const Text(
                   'Quests',
                 ),

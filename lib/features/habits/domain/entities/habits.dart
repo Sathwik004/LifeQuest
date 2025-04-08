@@ -30,6 +30,8 @@ class Habit extends Equatable {
     int? streak,
     DateTime? lastCompleted,
     bool? isActive,
+    HabitFrequency? frequency,
+    HabitDifficulty? difficulty,
   }) {
     return Habit(
       id: id ?? this.id,
@@ -38,10 +40,20 @@ class Habit extends Equatable {
       streak: streak ?? this.streak,
       lastCompleted: lastCompleted ?? this.lastCompleted,
       isActive: isActive ?? this.isActive,
+      frequency: frequency ?? this.frequency,
+      difficulty: difficulty ?? this.difficulty,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [id, title, description, streak, lastCompleted, isActive];
+  List<Object?> get props => [
+        id,
+        title,
+        description,
+        streak,
+        lastCompleted,
+        isActive,
+        frequency,
+        difficulty
+      ];
 }

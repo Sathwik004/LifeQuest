@@ -21,6 +21,8 @@ class HabitRepositoryImpl implements HabitRepository {
         streak: habit.streak,
         lastCompleted: habit.lastCompleted,
         isActive: habit.isActive,
+        frequency: habit.frequency,
+        difficulty: habit.difficulty,
       );
       await remoteDataSource.addHabit(habitModel, userId);
       return right(null);
@@ -51,6 +53,7 @@ class HabitRepositoryImpl implements HabitRepository {
   @override
   Future<Either<Failure, void>> updateHabit(Habit habit, String userId) async {
     try {
+      print("Updating habit with id: ${habit.id} and userId: $userId");
       final habitModel = HabitModel(
         id: habit.id,
         title: habit.title,
@@ -58,6 +61,8 @@ class HabitRepositoryImpl implements HabitRepository {
         streak: habit.streak,
         lastCompleted: habit.lastCompleted,
         isActive: habit.isActive,
+        frequency: habit.frequency,
+        difficulty: habit.difficulty,
       );
       await remoteDataSource.updateHabit(habitModel, userId);
       return right(null);
@@ -80,6 +85,8 @@ class HabitRepositoryImpl implements HabitRepository {
                 streak: habitModel.streak,
                 lastCompleted: habitModel.lastCompleted,
                 isActive: habitModel.isActive,
+                frequency: habitModel.frequency,
+                difficulty: habitModel.difficulty,
               ))
           .toList();
       return right(habits);

@@ -72,6 +72,7 @@ class HabitsBloc extends Bloc<HabitsEvent, HabitsState> {
                 .map(
                     (habit) => habit.id == event.habit.id ? event.habit : habit)
                 .toList();
+            print("Updated habits: ${updatedHabits[1].difficulty}");
             emit(HabitsLoaded(updatedHabits, userId: event.userId));
           } else {
             emit(HabitsErrorState("Failed to update habit"));
