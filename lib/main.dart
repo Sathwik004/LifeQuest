@@ -32,27 +32,27 @@ class MyApp extends StatelessWidget {
       providers: [
         //Pass all the blocs here
         BlocProvider<AuthBloc>(
-          create: (context) => serviceLocater<AuthBloc>()..add(AuthCheck()),
+          create: (context) => serviceLocator<AuthBloc>()..add(AuthCheck()),
         ),
 
         BlocProvider<BottomNavCubit>(
-          create: (context) => serviceLocater<BottomNavCubit>(),
+          create: (context) => serviceLocator<BottomNavCubit>(),
         ),
 
         BlocProvider<ThemeCubit>(
-          create: (context) => serviceLocater<ThemeCubit>(),
+          create: (context) => serviceLocator<ThemeCubit>(),
         ),
 
         BlocProvider<UserCubit>(
-          create: (context) => serviceLocater<UserCubit>(),
+          create: (context) => serviceLocator<UserCubit>(),
         ),
 
         BlocProvider<HabitsBloc>(
-          create: (context) => serviceLocater<HabitsBloc>(),
+          create: (context) => serviceLocator<HabitsBloc>(),
         ),
 
         BlocProvider<GroupBloc>(
-          create: (context) => serviceLocater<GroupBloc>(),
+          create: (context) => serviceLocator<GroupBloc>(),
         )
       ],
       child: const MainScreen(),

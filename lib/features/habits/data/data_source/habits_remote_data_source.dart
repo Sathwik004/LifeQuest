@@ -1,7 +1,7 @@
 import 'package:lifequest/features/habits/data/models/habit_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class HabitRemoteDataSource {
+abstract interface class HabitRemoteDataSource {
   Future<void> addHabit(HabitModel habit, String userId);
   Future<void> removeHabit(String id, String userId);
   Future<void> updateHabit(HabitModel habit, String userId);

@@ -45,7 +45,7 @@ class MainScreen extends StatelessWidget {
                     .add(GetHabitsEvent(userId: state.userId));
                 context
                     .read<GroupBloc>()
-                    .add(FetchUserGroups(userId: state.userId));
+                    .add(GetGroupsForUserEvent(userId: state.userId));
               }
             },
           ),

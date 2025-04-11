@@ -7,6 +7,14 @@ import 'package:lifequest/features/auth/data/data_source/auth_remote_data_source
 import 'package:lifequest/features/auth/data/repo/auth_repo_imp.dart';
 import 'package:lifequest/features/auth/domain/repo/auth_repo.dart';
 import 'package:lifequest/features/auth/domain/usecases/user_auth_state.dart';
+import 'package:lifequest/features/groups/data/data_source/groups_remote_data_source.dart';
+import 'package:lifequest/features/groups/data/repos/group_repo_impl.dart';
+import 'package:lifequest/features/groups/domain/repos/group_repo.dart';
+import 'package:lifequest/features/groups/domain/usecases/create_group.dart';
+import 'package:lifequest/features/groups/domain/usecases/discover_group.dart';
+import 'package:lifequest/features/groups/domain/usecases/get_groups.dart';
+import 'package:lifequest/features/groups/domain/usecases/join_group.dart';
+import 'package:lifequest/features/groups/domain/usecases/leave_group.dart';
 import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
 import 'package:lifequest/features/user_profile/data/data_source/user_remote_data_source.dart';
 import 'package:lifequest/features/user_profile/data/repo/user_repo_impl.dart';
@@ -29,7 +37,7 @@ import 'package:lifequest/features/user_profile/presentation/bloc/cubit/user_cub
 
 import 'features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 
-final serviceLocater = GetIt.instance;
+final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
   await _authdependencies();
@@ -41,142 +49,161 @@ Future<void> initDependencies() async {
 
 Future<void> _userProfileDependencies() async {
   // Add your user profile dependencies here
-  serviceLocater.registerLazySingleton(() => FirebaseFirestore.instance);
+  serviceLocator.registerLazySingleton(() => FirebaseFirestore.instance);
 
-  serviceLocater.registerFactory<UserRemoteDataSource>(
+  serviceLocator.registerFactory<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(
       firestore: FirebaseFirestore.instance,
     ),
   );
 
-  serviceLocater.registerFactory<UserRepository>(
+  serviceLocator.registerFactory<UserRepository>(
     () => UserRepoImpl(
-      userDataSource: serviceLocater(),
+      userDataSource: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => UserExists(
-      userRepository: serviceLocater(),
+      userRepository: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
-    () => SaveUser(userRepository: serviceLocater()),
+  serviceLocator.registerFactory(
+    () => SaveUser(userRepository: serviceLocator()),
   );
 
-  serviceLocater.registerFactory(
-    () => GetUser(userRepository: serviceLocater()),
+  serviceLocator.registerFactory(
+    () => GetUser(userRepository: serviceLocator()),
   );
 
-  serviceLocater.registerLazySingleton(
+  serviceLocator.registerLazySingleton(
     () => UserCubit(
-      getUserUseCase: serviceLocater(),
-      saveUserUseCase: serviceLocater(),
-      userExistsUseCase: serviceLocater(),
+      getUserUseCase: serviceLocator(),
+      saveUserUseCase: serviceLocator(),
+      userExistsUseCase: serviceLocator(),
     ),
   );
 }
 
 Future<void> _habitDependencies() async {
   // Add your habit dependencies here
-  serviceLocater.registerFactory<HabitRemoteDataSource>(
+  serviceLocator.registerFactory<HabitRemoteDataSource>(
     () => HabitRemoteDataSourceImpl(
       firestore: FirebaseFirestore.instance,
     ),
   );
 
-  serviceLocater.registerFactory<HabitRepository>(
+  serviceLocator.registerFactory<HabitRepository>(
     () => HabitRepositoryImpl(
-      remoteDataSource: serviceLocater(),
+      remoteDataSource: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => AddHabitUseCase(
-      repository: serviceLocater(),
+      repository: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => RemoveHabitUseCase(
-      repository: serviceLocater(),
+      repository: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => UpdateHabitUseCase(
-      repository: serviceLocater(),
+      repository: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => GetHabitsUseCase(
-      repository: serviceLocater(),
+      repository: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerLazySingleton<HabitsBloc>(
+  serviceLocator.registerLazySingleton<HabitsBloc>(
     () => HabitsBloc(
-      addHabitUseCase: serviceLocater(),
-      removeHabitUseCase: serviceLocater(),
-      updateHabitUseCase: serviceLocater(),
-      getHabitsUseCase: serviceLocater(),
+      addHabitUseCase: serviceLocator(),
+      removeHabitUseCase: serviceLocator(),
+      updateHabitUseCase: serviceLocator(),
+      getHabitsUseCase: serviceLocator(),
     ),
   );
 }
 
 Future<void> _authdependencies() async {
-  serviceLocater.registerLazySingleton(
+  serviceLocator.registerLazySingleton(
     () => GoogleSignIn(),
   );
 
-  serviceLocater.registerFactory<AuthRemoteDataSource>(
+  serviceLocator.registerFactory<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(
       firebaseAuth: FirebaseAuth.instance,
-      googleSignIn: serviceLocater(),
+      googleSignIn: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory<AuthRepo>(
+  serviceLocator.registerFactory<AuthRepo>(
     () => AuthRepoImp(
-      authRemoteDataSource: serviceLocater(),
+      authRemoteDataSource: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => UserSignIn(
-      authRepo: serviceLocater(),
+      authRepo: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => UserSignOut(
-      authRepo: serviceLocater(),
+      authRepo: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerFactory(
+  serviceLocator.registerFactory(
     () => UserAuthState(
-      authRepo: serviceLocater(),
+      authRepo: serviceLocator(),
     ),
   );
 
-  serviceLocater.registerLazySingleton<AuthBloc>(
+  serviceLocator.registerLazySingleton<AuthBloc>(
     () => AuthBloc(
-      userSignIn: serviceLocater(),
-      userSignOut: serviceLocater(),
-      userAuthState: serviceLocater(),
+      userSignIn: serviceLocator(),
+      userSignOut: serviceLocator(),
+      userAuthState: serviceLocator(),
     ),
   );
 }
 
 Future<void> _homeDependencies() async {
-  // Add your home dependencies here
-  serviceLocater.registerLazySingleton<BottomNavCubit>(() => BottomNavCubit());
-  serviceLocater.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
+  serviceLocator.registerLazySingleton<BottomNavCubit>(() => BottomNavCubit());
+  serviceLocator.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
 }
 
 Future<void> _guildDependencies() async {
-  serviceLocater.registerLazySingleton<GroupBloc>(() => GroupBloc());
+  serviceLocator.registerFactory<GroupRemoteDataSource>(
+    () => GroupRemoteDataSourceImpl(FirebaseFirestore.instance),
+  );
+
+  serviceLocator.registerFactory<GroupRepository>(
+    () => GroupRepositoryImpl(serviceLocator()),
+  );
+
+  serviceLocator.registerFactory(() => CreateGroup(serviceLocator()));
+  serviceLocator.registerFactory(() => JoinGroup(serviceLocator()));
+  serviceLocator.registerFactory(() => LeaveGroup(serviceLocator()));
+  serviceLocator.registerFactory(() => GetGroupsForUser(serviceLocator()));
+  serviceLocator.registerFactory(() => DiscoverGroups(serviceLocator()));
+
+  serviceLocator.registerFactory(() => GroupBloc(
+        createGroup: serviceLocator(),
+        joinGroup: serviceLocator(),
+        leaveGroup: serviceLocator(),
+        getGroupsForUser: serviceLocator(),
+        discoverGroups: serviceLocator(),
+      ));
 }

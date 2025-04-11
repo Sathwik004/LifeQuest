@@ -4,25 +4,42 @@ abstract class GroupEvent extends Equatable {
   const GroupEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-// Fetch groups the user is part of
-class FetchUserGroups extends GroupEvent {
-  final String userId;
-  const FetchUserGroups({required this.userId});
+class CreateGroupEvent extends GroupEvent {
+  final Groups group;
+  const CreateGroupEvent(this.group);
+  @override
+  List<Object?> get props => [];
 }
 
-// Join a group
-class JoinGroup extends GroupEvent {
-  final String userId;
+class JoinGroupEvent extends GroupEvent {
   final String groupId;
-  const JoinGroup(this.userId, this.groupId);
+  final String userId;
+  const JoinGroupEvent({required this.groupId, required this.userId});
+  @override
+  List<Object?> get props => [groupId, userId];
 }
 
-// Leave a group
-class LeaveGroup extends GroupEvent {
-  final String userId;
+class LeaveGroupEvent extends GroupEvent {
   final String groupId;
-  const LeaveGroup(this.userId, this.groupId);
+  final String userId;
+  const LeaveGroupEvent({required this.groupId, required this.userId});
+  @override
+  List<Object?> get props => [groupId, userId];
+}
+
+class GetGroupsForUserEvent extends GroupEvent {
+  final String userId;
+  const GetGroupsForUserEvent({required this.userId});
+  @override
+  List<Object?> get props => [userId];
+}
+
+class DiscoverGroupsEvent extends GroupEvent {
+  final int limit;
+  const DiscoverGroupsEvent({this.limit = 20});
+  @override
+  List<Object?> get props => [limit];
 }
