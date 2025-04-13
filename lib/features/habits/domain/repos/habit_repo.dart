@@ -4,7 +4,11 @@ import 'package:lifequest/features/habits/domain/entities/habits.dart';
 
 abstract class HabitRepository {
   Future<Either<Failure, void>> addHabit(Habit habit, String userId);
+  Future<Either<Failure, void>> addHabitsFromGroup(
+      List<Habit> habits, String userId);
   Future<Either<Failure, void>> removeHabit(String habitId, String userId);
+  Future<Either<Failure, void>> removeGroupHabits(
+      String groupId, String userId);
   Future<Either<Failure, void>> updateHabit(Habit habit, String userId);
   Future<Either<Failure, List<Habit>>> getHabits(String userId);
 }

@@ -30,6 +30,9 @@ class _HabitPageState extends State<HabitPage> {
           } else if (state is HabitsErrorState) {
             return Center(child: Text("Error State${state.message}"));
           } else if (state is HabitsLoaded) {
+            if (state.habits.isEmpty) {
+              return const Center(child: Text("Create Habits!"));
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: ListView.builder(
@@ -41,7 +44,6 @@ class _HabitPageState extends State<HabitPage> {
               ),
             );
           }
-          print(state);
           return const Center(child: Text("No habits found"));
         },
       ),
@@ -55,7 +57,6 @@ class _HabitPageState extends State<HabitPage> {
             isScrollControlled: true,
             builder: (_) => const AddHabitForm(),
           );
-          print('Add habit');
         },
         child: const Icon(Icons.add),
       ),

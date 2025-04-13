@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifequest/core/widgets/appbar.dart';
 import 'package:lifequest/features/groups/domain/entities/group_entity.dart';
 import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
+import 'package:lifequest/features/habits/domain/entities/habits.dart';
+import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 
 class GroupDetailScreen extends StatelessWidget {
   final Groups group;
@@ -31,6 +33,34 @@ class GroupDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text("Members: ${group.memberIds.length}"),
             const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: group.habits.length,
+                itemBuilder: (context, index) {
+                  final habit = group.habits[index];
+                  return ListTile(
+                    title: Text(habit.title),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(habit.description),
+                        const SizedBox(height: 6),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Frequency : ${habit.frequency.name}'),
+                            Text('Difficulty : ${habit.difficulty.name}'),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
             BlocConsumer<GroupBloc, GroupState>(
               listener: (context, state) {
                 if (state is GroupError) {
@@ -51,17 +81,22 @@ class GroupDetailScreen extends StatelessWidget {
                                 strokeWidth: 2, color: Colors.white),
                           )
                         : Icon(isMember ? Icons.exit_to_app : Icons.group_add),
-                    label: Text(isMember ? 'Leave Group' : 'Join Group'),
+                    label: Text(isMember ? 'Leave Group' : 'Join'),
                     onPressed: isLoading
                         ? null
                         : () {
                             if (isMember) {
+                              context.read<HabitsBloc>().add(
+                                  RemoveGroupHabitsEvent(
+                                      groupId: group.id,
+                                      userId: currentUserId));
                               context.read<GroupBloc>().add(
                                     LeaveGroupEvent(
                                       groupId: group.id,
                                       userId: currentUserId,
                                     ),
                                   );
+                              Navigator.of(context).pop();
                             } else {
                               context.read<GroupBloc>().add(
                                     JoinGroupEvent(
@@ -69,6 +104,16 @@ class GroupDetailScreen extends StatelessWidget {
                                       userId: currentUserId,
                                     ),
                                   );
+                              context.read<HabitsBloc>().add(
+                                    AddHabitsFromGroupEvent(
+                                      userId: currentUserId,
+                                      habits: group.habits.map((template) {
+                                        return Habit.fromTemplate(template,
+                                            groupId: group.id);
+                                      }).toList(),
+                                    ),
+                                  );
+                              Navigator.of(context).pop();
                             }
                           },
                   ),

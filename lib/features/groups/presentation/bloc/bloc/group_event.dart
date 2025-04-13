@@ -17,7 +17,10 @@ class CreateGroupEvent extends GroupEvent {
 class JoinGroupEvent extends GroupEvent {
   final String groupId;
   final String userId;
+  //final List<HabitTemplate> habits;
+
   const JoinGroupEvent({required this.groupId, required this.userId});
+
   @override
   List<Object?> get props => [groupId, userId];
 }

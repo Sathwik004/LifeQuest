@@ -35,6 +35,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       CreateGroupEvent event, Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result = await createGroup(event.group);
+    // TODO: Add all habits to Habits state
     result.fold(
       (failure) => emit(GroupError(failure.message)),
       (_) => add(GetGroupsForUserEvent(userId: event.group.creatorId)),
@@ -42,22 +43,25 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   }
 
   Future<void> _onJoinGroup(
-      // TODO: Add all habits to Habits state
-      JoinGroupEvent event,
-      Emitter<GroupState> emit) async {
+      JoinGroupEvent event, Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result =
         await joinGroup(JoinGroupParams(event.groupId, event.userId));
     result.fold(
       (failure) => emit(GroupError(failure.message)),
-      (_) => add(GetGroupsForUserEvent(userId: event.userId)),
+      (_) {
+        // TODO: return a habitTemplate list on joining a group
+        //   final habits = event.habits.map((template) {
+        //   return Habit.fromTemplate(template, eventId: group.id);
+        // }).toList();
+
+        add(GetGroupsForUserEvent(userId: event.userId));
+      },
     );
   }
 
   Future<void> _onLeaveGroup(
-      // TODO: Remove all habits to Habits state
-      LeaveGroupEvent event,
-      Emitter<GroupState> emit) async {
+      LeaveGroupEvent event, Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result =
         await leaveGroup(LeaveGroupParams(event.groupId, event.userId));
@@ -68,7 +72,10 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   }
 
   Future<void> _onGetGroupsForUser(
-      GetGroupsForUserEvent event, Emitter<GroupState> emit) async {
+
+// TODO: Find groups which the user is not a part of
+      GetGroupsForUserEvent event,
+      Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result = await getGroupsForUser(event.userId);
     result.fold(

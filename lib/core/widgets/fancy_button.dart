@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-Color _hslRelativeColor({double h = 0.0, s = 0.0, l = 0.0}) {
-  final hslColor = HSLColor.fromColor(
-    Colors.deepPurple,
-  );
-  h = (hslColor.hue + h).clamp(0.0, 360.0);
-  s = (hslColor.saturation + s).clamp(0.0, 1.0);
-  l = (hslColor.lightness + l).clamp(0.0, 1.0);
-  return HSLColor.fromAHSL(hslColor.alpha, h, s, l).toColor();
-}
+// Color _hslRelativeColor({double h = 0.0, s = 0.0, l = 0.0}) {
+//   final hslColor = HSLColor.fromColor(
+//     Colors.deepPurple,
+//   );
+//   h = (hslColor.hue + h).clamp(0.0, 360.0);
+//   s = (hslColor.saturation + s).clamp(0.0, 1.0);
+//   l = (hslColor.lightness + l).clamp(0.0, 1.0);
+//   return HSLColor.fromAHSL(hslColor.alpha, h, s, l).toColor();
+// }
 
 class FancyButton extends StatefulWidget {
   const FancyButton(
@@ -60,7 +60,7 @@ class _FancyButtonState extends State<FancyButton>
 
   void _setupAnimation() {
     _animationController.stop();
-    final oldControllerValue = _animationController.value ?? 0.0;
+    final oldControllerValue = _animationController.value;
     _animationController.dispose();
     _animationController = AnimationController(
       duration: Duration(microseconds: widget.duration.inMicroseconds ~/ 2),

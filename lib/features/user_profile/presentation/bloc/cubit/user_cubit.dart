@@ -19,15 +19,15 @@ class UserCubit extends Cubit<UserState> {
   }) : super(UserInitial());
 
   //TODO: Add experience to firstore on completion of a task
+  // TODO: Add exp on completing habits
+// TODO: Add damage on not completing them
   Future<void> addExperience({int experience = 10}) async {
-    print("Adding experience........");
     final currentState = state;
     if (currentState is UserLoaded) {
       final updatedUser = currentState.user.copyWith(
         experience: currentState.user.experience + experience,
       );
       emit(UserLoading());
-      print("Updated user: ${updatedUser.experience}");
 
       // final result = await saveUserUseCase(SaveUserParams(user: updatedUser));
 
@@ -36,7 +36,6 @@ class UserCubit extends Cubit<UserState> {
       //   (_) => emit(UserLoaded(updatedUser)),
       // );
       emit(UserLoaded(updatedUser));
-      print("Experience added");
     }
   }
 

@@ -1,9 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:lifequest/features/groups/domain/entities/habit_template.dart';
 import 'package:lifequest/features/habits/domain/enums/habit_difficulty.dart';
 import 'package:lifequest/features/habits/domain/enums/habit_frequency.dart';
+import 'package:uuid/uuid.dart';
 
 class Habit extends Equatable {
   final String id;
+  final String? groupId;
   final String title;
   final String description;
   final int streak;
@@ -14,6 +17,7 @@ class Habit extends Equatable {
 
   const Habit({
     required this.id,
+    this.groupId,
     required this.title,
     required this.description,
     required this.streak,
@@ -25,6 +29,7 @@ class Habit extends Equatable {
 
   Habit copyWith({
     String? id,
+    String? groupId,
     String? title,
     String? description,
     int? streak,
@@ -35,6 +40,7 @@ class Habit extends Equatable {
   }) {
     return Habit(
       id: id ?? this.id,
+      groupId: groupId ?? this.groupId,
       title: title ?? this.title,
       description: description ?? this.description,
       streak: streak ?? this.streak,
@@ -45,9 +51,27 @@ class Habit extends Equatable {
     );
   }
 
+  factory Habit.fromTemplate(
+    HabitTemplate template, {
+    String? groupId,
+  }) {
+    return Habit(
+      id: const Uuid().v4(),
+      groupId: groupId,
+      title: template.title,
+      description: template.description,
+      streak: 0,
+      lastCompleted: DateTime(1999, 9, 9),
+      isActive: true,
+      frequency: template.frequency,
+      difficulty: template.difficulty,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,
+        groupId,
         title,
         description,
         streak,
@@ -57,6 +81,3 @@ class Habit extends Equatable {
         difficulty
       ];
 }
-
-// TODO: Add a method to create a habit from a template
-// TODO: Add a groupId to the habit entity which can be null

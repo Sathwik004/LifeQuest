@@ -16,6 +16,8 @@ import 'package:lifequest/features/groups/domain/usecases/get_groups.dart';
 import 'package:lifequest/features/groups/domain/usecases/join_group.dart';
 import 'package:lifequest/features/groups/domain/usecases/leave_group.dart';
 import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
+import 'package:lifequest/features/habits/domain/usecases/add_group_habits.dart';
+import 'package:lifequest/features/habits/domain/usecases/remove_group_habits.dart';
 import 'package:lifequest/features/user_profile/data/data_source/user_remote_data_source.dart';
 import 'package:lifequest/features/user_profile/data/repo/user_repo_impl.dart';
 import 'package:lifequest/features/user_profile/domain/repo/user_repo.dart';
@@ -107,7 +109,19 @@ Future<void> _habitDependencies() async {
   );
 
   serviceLocator.registerFactory(
+    () => AddGroupHabitsUseCase(
+      repository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory(
     () => RemoveHabitUseCase(
+      repository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory(
+    () => RemoveGroupHabitsUseCase(
       repository: serviceLocator(),
     ),
   );
@@ -130,6 +144,8 @@ Future<void> _habitDependencies() async {
       removeHabitUseCase: serviceLocator(),
       updateHabitUseCase: serviceLocator(),
       getHabitsUseCase: serviceLocator(),
+      addGroupHabitsUseCase: serviceLocator(),
+      removeGroupHabitsUseCase: serviceLocator(),
     ),
   );
 }

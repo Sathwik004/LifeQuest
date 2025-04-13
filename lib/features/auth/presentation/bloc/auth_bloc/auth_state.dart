@@ -9,6 +9,7 @@ final class AuthInitial extends AuthState {}
 final class AuthLoadingState extends AuthState {}
 
 final class AuthSuccessState extends AuthState {
+  @override
   final String userId;
 
   AuthSuccessState({required this.userId});

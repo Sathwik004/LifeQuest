@@ -34,10 +34,36 @@ class HabitRepositoryImpl implements HabitRepository {
   }
 
   @override
+  Future<Either<Failure, void>> addHabitsFromGroup(
+      List<Habit> habits, String userId) async {
+    try {
+      final habitModels = habits
+          .map((habit) => HabitModel(
+                id: habit.id,
+                title: habit.title,
+                description: habit.description,
+                streak: habit.streak,
+                lastCompleted: habit.lastCompleted,
+                isActive: habit.isActive,
+                frequency: habit.frequency,
+                difficulty: habit.difficulty,
+                groupId: habit.groupId,
+              ))
+          .toList();
+
+      await remoteDataSource.addGroupHabits(habitModels, userId);
+      return right(null);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> removeHabit(
       String habitId, String userId) async {
     try {
-      print("Removing habit with id: $habitId and userId: $userId");
       if (userId.isEmpty) {
         return left(Failure("User ID is null"));
       }
@@ -51,9 +77,21 @@ class HabitRepositoryImpl implements HabitRepository {
   }
 
   @override
+  Future<Either<Failure, void>> removeGroupHabits(
+      String groupId, String userId) async {
+    try {
+      await remoteDataSource.removeGroupHabits(userId, groupId);
+      return right(null);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> updateHabit(Habit habit, String userId) async {
     try {
-      print("Updating habit with id: ${habit.id} and userId: $userId");
       final habitModel = HabitModel(
         id: habit.id,
         title: habit.title,
@@ -63,6 +101,7 @@ class HabitRepositoryImpl implements HabitRepository {
         isActive: habit.isActive,
         frequency: habit.frequency,
         difficulty: habit.difficulty,
+        groupId: habit.groupId,
       );
       await remoteDataSource.updateHabit(habitModel, userId);
       return right(null);
@@ -87,6 +126,7 @@ class HabitRepositoryImpl implements HabitRepository {
                 isActive: habitModel.isActive,
                 frequency: habitModel.frequency,
                 difficulty: habitModel.difficulty,
+                groupId: habitModel.groupId, // Nullable groupId
               ))
           .toList();
       return right(habits);

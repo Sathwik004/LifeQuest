@@ -21,6 +21,16 @@ class AddHabitsEvent extends HabitsEvent {
   List<Object?> get props => [habits];
 }
 
+class AddHabitsFromGroupEvent extends HabitsEvent {
+  final List<Habit> habits;
+  final String userId;
+
+  AddHabitsFromGroupEvent({required this.habits, required this.userId});
+
+  @override
+  List<Object?> get props => [habits];
+}
+
 class UpdateHabitsEvent extends HabitsEvent {
   final Habit habit;
   final String userId;
@@ -39,6 +49,16 @@ class RemoveHabitsEvent extends HabitsEvent {
 
   @override
   List<Object?> get props => [habitId];
+}
+
+class RemoveGroupHabitsEvent extends HabitsEvent {
+  final String groupId;
+  final String userId;
+
+  RemoveGroupHabitsEvent({required this.groupId, required this.userId});
+
+  @override
+  List<Object?> get props => [groupId];
 }
 
 class IncrementHabitStreakEvent extends HabitsEvent {

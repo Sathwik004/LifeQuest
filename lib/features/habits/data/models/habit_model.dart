@@ -13,6 +13,7 @@ class HabitModel extends Habit {
     required super.isActive,
     required super.frequency,
     required super.difficulty,
+    super.groupId,
   });
 
   /// Converts Firestore document data into a `HabitModel`
@@ -40,6 +41,7 @@ class HabitModel extends Habit {
       isActive: map['isActive'] as bool,
       frequency: frequency,
       difficulty: difficulty,
+      groupId: map['groupId'] as String?, // Nullable groupId
     );
   }
 
@@ -54,6 +56,7 @@ class HabitModel extends Habit {
       'isActive': isActive,
       'frequency': frequency.name,
       'difficulty': difficulty.name,
+      'groupId': groupId, // Nullable groupId
     };
   }
 }

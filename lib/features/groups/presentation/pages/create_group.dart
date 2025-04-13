@@ -8,6 +8,8 @@ import 'package:lifequest/features/groups/domain/entities/habit_template.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:lifequest/features/groups/presentation/bloc/bloc/group_bloc.dart';
 import 'package:lifequest/features/groups/presentation/components/habit_template_form.dart';
+import 'package:lifequest/features/habits/domain/entities/habits.dart';
+import 'package:lifequest/features/habits/presentation/bloc/habits_bloc/habits_bloc.dart';
 import 'package:uuid/uuid.dart';
 
 class GroupCreationPage extends StatefulWidget {
@@ -135,6 +137,15 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
             TextButton(
               onPressed: () {
                 context.read<GroupBloc>().add(CreateGroupEvent(group));
+                context.read<HabitsBloc>().add(
+                      AddHabitsFromGroupEvent(
+                        userId: userId,
+                        habits: _habits.map((template) {
+                          return Habit.fromTemplate(template,
+                              groupId: group.id);
+                        }).toList(),
+                      ),
+                    );
                 Navigator.of(context).pop();
                 Navigator.pop(context);
               },
@@ -158,8 +169,6 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
       habits: _habits,
     );
 
-    // Save the group (e.g., send it to a backend or store locally)
-    print('Group Created: ${group}');
     return group;
   }
 
