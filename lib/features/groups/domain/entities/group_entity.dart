@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:lifequest/features/groups/domain/entities/habit_template.dart';
 
 class Groups extends Equatable {
   final String id;
@@ -8,7 +9,7 @@ class Groups extends Equatable {
   final List<String> memberIds;
   final String badgeColor;
   final DateTime createdAt;
-  final List<Map<String, dynamic>> habits;
+  final List<HabitTemplate> habits;
 
   const Groups({
     required this.id,
@@ -29,7 +30,7 @@ class Groups extends Equatable {
     List<String>? memberIds,
     String? badgeColor,
     DateTime? createdAt,
-    List<Map<String, dynamic>>? habits,
+    List<HabitTemplate>? habits,
   }) {
     return Groups(
       id: id ?? this.id,
@@ -52,6 +53,5 @@ class Groups extends Equatable {
         memberIds,
         badgeColor,
         createdAt,
-        habits
       ];
 }

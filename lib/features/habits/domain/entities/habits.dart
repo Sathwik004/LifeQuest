@@ -57,3 +57,6 @@ class Habit extends Equatable {
         difficulty
       ];
 }
+
+// TODO: Add a method to create a habit from a template
+// TODO: Add a groupId to the habit entity which can be null

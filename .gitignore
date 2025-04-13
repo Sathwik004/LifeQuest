@@ -49,3 +49,4 @@ firebase.json
 /lib/firebase_options.dart
 /build
 /test
+/functions

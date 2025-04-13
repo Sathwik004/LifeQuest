@@ -28,7 +28,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     on<JoinGroupEvent>(_onJoinGroup);
     on<LeaveGroupEvent>(_onLeaveGroup);
     on<GetGroupsForUserEvent>(_onGetGroupsForUser);
-    on<DiscoverGroupsEvent>(_onDiscoverGroups);
+    // on<DiscoverGroupsEvent>(_onDiscoverGroups);
   }
 
   Future<void> _onCreateGroup(
@@ -42,7 +42,9 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   }
 
   Future<void> _onJoinGroup(
-      JoinGroupEvent event, Emitter<GroupState> emit) async {
+      // TODO: Add all habits to Habits state
+      JoinGroupEvent event,
+      Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result =
         await joinGroup(JoinGroupParams(event.groupId, event.userId));
@@ -53,7 +55,9 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   }
 
   Future<void> _onLeaveGroup(
-      LeaveGroupEvent event, Emitter<GroupState> emit) async {
+      // TODO: Remove all habits to Habits state
+      LeaveGroupEvent event,
+      Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result =
         await leaveGroup(LeaveGroupParams(event.groupId, event.userId));
@@ -75,20 +79,15 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     );
   }
 
-  Future<void> _onDiscoverGroups(
-      DiscoverGroupsEvent event, Emitter<GroupState> emit) async {
-    emit(GroupLoading());
-    final result = await discoverGroups(event.limit);
-    result.fold(
-      (failure) => emit(GroupError(failure.message)),
-      (groups) => groups.isEmpty
-          ? emit(GroupEmpty())
-          : emit(GroupOperationSuccess(groups)),
-    );
-  }
+  // Future<void> _onDiscoverGroups(
+  //     DiscoverGroupsEvent event, Emitter<GroupState> emit) async {
+  //   emit(GroupLoading());
+  //   final result = await discoverGroups(event.limit);
+  //   result.fold(
+  //     (failure) => emit(GroupError(failure.message)),
+  //     (groups) => groups.isEmpty
+  //         ? emit(GroupEmpty())
+  //         : emit(GroupOperationSuccess(groups)),
+  //   );
+  // }
 }
-
-
-// TODO: Add all dependencies to initdependencies.dart file
-// TODO: Add appropriate bloc provider in main.dart file
-// TODO: Add bloc listeners or builders 

@@ -53,9 +53,25 @@ class GroupRemoteDataSourceImpl implements GroupRemoteDataSource {
   @override
   Future<void> leaveGroup(String groupId, String userId) async {
     try {
-      await firestore.collection('groups').doc(groupId).update({
+      final docRef = firestore.collection('groups').doc(groupId);
+
+      // Step 1: Remove the user from the memberIds array
+      await docRef.update({
         'memberIds': FieldValue.arrayRemove([userId]),
       });
+
+      // Step 2: Re-fetch the updated group document
+      final updatedDoc = await docRef.get();
+
+      if (updatedDoc.exists) {
+        final data = updatedDoc.data();
+        final members = List<String>.from(data?['memberIds'] ?? []);
+
+        // Step 3: Delete the group if there are no members left
+        if (members.isEmpty) {
+          await docRef.delete();
+        }
+      }
     } catch (e) {
       throw ServerException('Failed to leave group: $e');
     }

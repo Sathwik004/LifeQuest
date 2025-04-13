@@ -37,9 +37,9 @@ class GetGroupsForUserEvent extends GroupEvent {
   List<Object?> get props => [userId];
 }
 
-class DiscoverGroupsEvent extends GroupEvent {
-  final int limit;
-  const DiscoverGroupsEvent({this.limit = 20});
-  @override
-  List<Object?> get props => [limit];
-}
+// class DiscoverGroupsEvent extends GroupEvent {
+//   final int limit;
+//   const DiscoverGroupsEvent({this.limit = 20});
+//   @override
+//   List<Object?> get props => [limit];
+// }
