@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lifequest/features/user_profile/domain/entities/user.dart';
+import 'package:lifequest/features/user_profile/domain/usecases/add_experience.dart';
 import 'package:lifequest/features/user_profile/domain/usecases/get_user.dart';
 import 'package:lifequest/features/user_profile/domain/usecases/save_user.dart';
 import 'package:lifequest/features/user_profile/domain/usecases/user_exists.dart';
@@ -11,16 +12,19 @@ class UserCubit extends Cubit<UserState> {
   final GetUser getUserUseCase;
   final SaveUser saveUserUseCase;
   final UserExists userExistsUseCase;
+  final AddExperienceUseCase addExperienceUseCase;
 
   UserCubit({
     required this.getUserUseCase,
     required this.saveUserUseCase,
     required this.userExistsUseCase,
+    required this.addExperienceUseCase,
   }) : super(UserInitial());
 
   //TODO: Add experience to firstore on completion of a task
   // TODO: Add exp on completing habits
 // TODO: Add damage on not completing them
+
   Future<void> addExperience({int experience = 10}) async {
     final currentState = state;
     if (currentState is UserLoaded) {
@@ -29,13 +33,16 @@ class UserCubit extends Cubit<UserState> {
       );
       emit(UserLoading());
 
-      // final result = await saveUserUseCase(SaveUserParams(user: updatedUser));
+      final result = await addExperienceUseCase(
+        AddExperienceParams(
+            userId: currentState.user.uid, experience: experience),
+      );
 
-      // result.fold(
-      //   (failure) => emit(UserError(failure.message)),
-      //   (_) => emit(UserLoaded(updatedUser)),
-      // );
-      emit(UserLoaded(updatedUser));
+      result.fold(
+        (failure) => emit(UserError(failure.message)),
+        (_) => emit(
+            UserLoaded(updatedUser)), // or re-emit updated UserLoaded if needed
+      );
     }
   }
 

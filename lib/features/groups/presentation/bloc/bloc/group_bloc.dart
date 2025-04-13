@@ -35,7 +35,6 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       CreateGroupEvent event, Emitter<GroupState> emit) async {
     emit(GroupLoading());
     final result = await createGroup(event.group);
-    // TODO: Add all habits to Habits state
     result.fold(
       (failure) => emit(GroupError(failure.message)),
       (_) => add(GetGroupsForUserEvent(userId: event.group.creatorId)),
@@ -50,7 +49,6 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     result.fold(
       (failure) => emit(GroupError(failure.message)),
       (_) {
-        // TODO: return a habitTemplate list on joining a group
         //   final habits = event.habits.map((template) {
         //   return Habit.fromTemplate(template, eventId: group.id);
         // }).toList();

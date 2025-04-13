@@ -21,6 +21,7 @@ import 'package:lifequest/features/habits/domain/usecases/remove_group_habits.da
 import 'package:lifequest/features/user_profile/data/data_source/user_remote_data_source.dart';
 import 'package:lifequest/features/user_profile/data/repo/user_repo_impl.dart';
 import 'package:lifequest/features/user_profile/domain/repo/user_repo.dart';
+import 'package:lifequest/features/user_profile/domain/usecases/add_experience.dart';
 import 'package:lifequest/features/user_profile/domain/usecases/get_user.dart';
 import 'package:lifequest/features/user_profile/domain/usecases/save_user.dart';
 import 'package:lifequest/features/user_profile/domain/usecases/user_exists.dart';
@@ -50,7 +51,6 @@ Future<void> initDependencies() async {
 }
 
 Future<void> _userProfileDependencies() async {
-  // Add your user profile dependencies here
   serviceLocator.registerLazySingleton(() => FirebaseFirestore.instance);
 
   serviceLocator.registerFactory<UserRemoteDataSource>(
@@ -72,6 +72,12 @@ Future<void> _userProfileDependencies() async {
   );
 
   serviceLocator.registerFactory(
+    () => AddExperienceUseCase(
+      userRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory(
     () => SaveUser(userRepository: serviceLocator()),
   );
 
@@ -84,6 +90,7 @@ Future<void> _userProfileDependencies() async {
       getUserUseCase: serviceLocator(),
       saveUserUseCase: serviceLocator(),
       userExistsUseCase: serviceLocator(),
+      addExperienceUseCase: serviceLocator(),
     ),
   );
 }

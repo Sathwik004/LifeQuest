@@ -12,6 +12,19 @@ class UserRepoImpl implements UserRepository {
   UserRepoImpl({required this.userDataSource});
 
   @override
+  Future<Either<Failure, void>> addExperience(
+      String userId, int experience) async {
+    try {
+      await userDataSource.addExperience(userId, experience);
+      return right(null);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> doesUserExist(String userId) async {
     try {
       final exists = await userDataSource.doesUserExist(userId);

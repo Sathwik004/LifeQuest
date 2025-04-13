@@ -70,7 +70,6 @@ class HabitsBloc extends Bloc<HabitsEvent, HabitsState> {
         (success) {
           final currentState = state;
 
-          print("Current State: $currentState");
           if (currentState is HabitsLoaded) {
             final updatedHabits = List<Habit>.from(currentState.habits)
               ..addAll(event.habits);
@@ -135,11 +134,9 @@ class HabitsBloc extends Bloc<HabitsEvent, HabitsState> {
         (success) {
           final currentState = state;
           if (currentState is HabitsLoaded) {
-            print(currentState.habits);
             final updatedHabits = currentState.habits
                 .where((habit) => habit.groupId != event.groupId)
                 .toList();
-            print(updatedHabits);
             emit(HabitsLoaded(updatedHabits, userId: event.userId));
           } else {
             emit(HabitsErrorState("Failed to remove group habits"));

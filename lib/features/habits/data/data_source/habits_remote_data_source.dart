@@ -18,7 +18,7 @@ class HabitRemoteDataSourceImpl implements HabitRemoteDataSource {
 
   @override
   Future<void> updateStreak(String habitId, String userId) async {
-    // TODO: Add the new completion date to the habit
+    // TODO: Add only the new completion date to the habit
   }
 
   @override

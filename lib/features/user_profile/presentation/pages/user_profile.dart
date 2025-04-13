@@ -21,9 +21,7 @@ class UserPage extends StatelessWidget {
           } else if (state is UserLoaded) {
             final user = state.user;
             int maxExperience = user.level * 5 + 100;
-            int displayedExperience = user.experience > maxExperience
-                ? maxExperience
-                : user.experience;
+            int displayedExperience = user.experience % maxExperience;
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -66,17 +64,17 @@ class UserPage extends StatelessWidget {
 
                     const SizedBox(height: 30),
 
-                    // Health Bar
-                    const Text(
-                      "Health:",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 5),
-                    Text("${user.health} / 100"),
-                    _buildProgressBar(user.health, 100,
-                        const Color.fromARGB(255, 226, 66, 55)),
+                    // // Health Bar
+                    // const Text(
+                    //   "Health:",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+                    // const SizedBox(height: 5),
+                    // Text("${user.health} / 100"),
+                    // _buildProgressBar(user.health, 100,
+                    //     const Color.fromARGB(255, 226, 66, 55)),
 
-                    const SizedBox(height: 20),
+                    // const SizedBox(height: 20),
 
                     // Experience Bar
                     const Text(

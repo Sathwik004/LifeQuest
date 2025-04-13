@@ -6,12 +6,26 @@ abstract interface class UserRemoteDataSource {
   Future<bool> doesUserExist(String userId);
   Future<void> createUser(UserModel user);
   Future<UserModel> getUser(String userId);
+  Future<void> addExperience(String userId, int experience);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final FirebaseFirestore firestore;
 
   UserRemoteDataSourceImpl({required this.firestore});
+
+  @override
+  Future<void> addExperience(String userId, int experience) async {
+    try {
+      final userRef = firestore.collection('users').doc(userId);
+
+      await userRef.update({
+        'experience': FieldValue.increment(experience),
+      });
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
 
   @override
   Future<bool> doesUserExist(String userId) async {
